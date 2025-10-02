@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "skybuddy",
+    "version": "${version}",
+    "name": "SkyBuddy",
+    "description": "This is an example description! Tell everyone what your mod is about!",
+    "authors": [
+        "Me!"
+    ],
+    "contact": {
+        "sources": "https://github.com/jumpingpxl/modular-fabric-mod-template"
+    },
+    "icon": "assets/skybuddy/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "preLaunch": [
+            "io.byteforge.skybuddy.runner.DevEnvironmentMixinApplier::apply"
+        ],
+        "client": [
+            "io.byteforge.skybuddy.core.DefaultSkyBuddy"
+        ],
+        "modmenu": [
+            "io.byteforge.skybuddy.integration.modmenu.ModMenuIntegration"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "minecraft": "${minecraft_version}",
+        "java": ">=21",
+        "fabric-api": "*"
+    },
+    "suggests": {
+        "modmenu": "*"
+    }
+}
