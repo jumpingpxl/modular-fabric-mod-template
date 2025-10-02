@@ -4,17 +4,14 @@ import com.google.auto.service.AutoService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.byteforge.skybuddy.processor.SingleAnnotationProcessor;
 import io.byteforge.skybuddy.processor.util.ProcessorUtil;
 import org.spongepowered.asm.mixin.Mixin;
 
-import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedSourceVersion;
-import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic;
 import javax.tools.FileObject;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,38 +25,24 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 @AutoService(Processor.class)
-@SupportedSourceVersion(SourceVersion.RELEASE_21)
-public class MixinAnnotationProcessor extends AbstractProcessor {
+public class MixinAnnotationProcessor extends SingleAnnotationProcessor {
 
   private final List<MixinClass> mixinClasses = new ArrayList<>();
 
+  public MixinAnnotationProcessor() {
+    super(Mixin.class);
+  }
+
   @Override
-  public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-    String moduleName = this.processingEnv.getOptions().get("moduleName");
-    if (roundEnv.processingOver()) {
-      this.processingEnv.getMessager().printMessage(
-          Diagnostic.Kind.NOTE,
-          "SkyBuddy Mixin Annotation Processor found " + this.mixinClasses.size() + " "
-              + "mixins for module " + moduleName + "..."
-      );
-
-      this.save(moduleName);
-      return true;
-    }
-
+  protected void process(RoundEnvironment roundEnv, Set<? extends Element> annotatedElements) {
     // log info
-    this.processingEnv.getMessager().printMessage(
-        Diagnostic.Kind.NOTE,
-        "SkyBuddy Mixin Annotation Processor is running for module " + moduleName + "..."
+    this.printInfo(
+        "Mixin Annotation Processor is running for module " + this.getModuleName() + "..."
     );
 
-    for (Element element : roundEnv.getElementsAnnotatedWith(Mixin.class)) {
+    for (Element element : annotatedElements) {
       if (!(element instanceof TypeElement typeElement)) {
-        this.processingEnv.getMessager().printMessage(
-            Diagnostic.Kind.ERROR,
-            "Mixin annotation can only be applied to classes."
-        );
-
+        this.printWarning("Mixin annotation can only be applied to classes.");
         continue;
       }
 
@@ -77,16 +60,16 @@ public class MixinAnnotationProcessor extends AbstractProcessor {
 
       this.mixinClasses.add(new MixinClass(className, qualifiedName, packageName));
     }
-
-    return true;
   }
 
-  private void save(String moduleName) {
+  @Override
+  protected void processingFinished(RoundEnvironment roundEnv) {
+    String moduleName = this.getModuleName();
     if (this.mixinClasses.isEmpty()) {
       return;
     }
 
-    String projectId = this.processingEnv.getOptions().get("projectId");
+    String projectId = this.getProjectId();
     Gson gson = new Gson();
     String fileName = projectId + "-" + moduleName + ".mixins.json";
     String commonTopLevelPackage = this.findCommonTopLevelPackage();
@@ -110,8 +93,7 @@ public class MixinAnnotationProcessor extends AbstractProcessor {
       JsonArray mixinArray = new JsonArray();
       for (MixinClass mixinClass : this.mixinClasses) {
         if (!mixinClass.packageName.startsWith(commonTopLevelPackage)) {
-          this.processingEnv.getMessager().printMessage(
-              Diagnostic.Kind.WARNING,
+          this.printWarning(
               "Skipping mixin class outside of common top-level package: "
                   + mixinClass.qualifiedName
           );
@@ -128,20 +110,16 @@ public class MixinAnnotationProcessor extends AbstractProcessor {
       // search for *.refmap.json file in classesDir
       try (Stream<Path> stream = Files.list(classesDir)) {
         Optional<Path> first = stream.filter(
-            file -> file.getFileName().toString().endsWith(".refmap.json")).findFirst();
+            file -> file.getFileName().toString().endsWith(".refmap.json")
+        ).findFirst();
+
         String refmapName;
         if (first.isPresent()) {
           refmapName = first.get().getFileName().toString();
-          this.processingEnv.getMessager().printMessage(
-              Diagnostic.Kind.NOTE,
-              "Found refmap file name: " + refmapName
-          );
+          this.printInfo("Found refmap file name: " + refmapName);
         } else {
           refmapName = projectId + "-" + moduleName + ".refmap.json";
-          this.processingEnv.getMessager().printMessage(
-              Diagnostic.Kind.WARNING,
-              "No refmap file found, defaulting to: " + refmapName
-          );
+          this.printWarning("No refmap file found, defaulting to: " + refmapName);
         }
 
         mixinConfig.addProperty("refmap", refmapName);
@@ -154,24 +132,12 @@ public class MixinAnnotationProcessor extends AbstractProcessor {
           gson.toJson(mixinConfig)
       );
 
-      this.processingEnv.getMessager().printMessage(
-          Diagnostic.Kind.NOTE,
-          "Wrote mixin file: " + fileName + " with "
-              + this.mixinClasses.size() + " mixins."
+      this.printInfo(
+          "Wrote mixin file " + fileName + " with " + this.mixinClasses.size() + " mixins."
       );
     } catch (IOException e) {
-      this.processingEnv.getMessager().printMessage(
-          Diagnostic.Kind.ERROR,
-          "Failed to write mixin file: " + fileName + " - " + e.getMessage()
-      );
+      this.printError("Failed to write mixin file " + fileName + " - " + e.getMessage());
     }
-  }
-
-  @Override
-  public Set<String> getSupportedAnnotationTypes() {
-    return Set.of(
-        Mixin.class.getCanonicalName()
-    );
   }
 
   private JsonObject loadDefaultMixinConfig(Gson gson) throws IOException {
@@ -197,7 +163,8 @@ public class MixinAnnotationProcessor extends AbstractProcessor {
           return commonPackage.toString();
         }
       }
-      if (commonPackage.length() > 0) {
+
+      if (!commonPackage.isEmpty()) {
         commonPackage.append(".");
       }
 
