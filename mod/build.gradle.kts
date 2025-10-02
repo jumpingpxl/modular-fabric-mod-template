@@ -6,7 +6,7 @@ plugins {
 val libs = the<org.gradle.accessors.dm.LibrariesForLibraries>()
 val mods = the<org.gradle.accessors.dm.LibrariesForModDependencies>()
 
-val accessWidener = file("core/src/main/resources/skybuddy.accesswidener")
+val accessWidener = file("core/src/main/resources/${rootProject.name}.accesswidener")
 subprojects {
     // Skip non-mod projects
     if (project.name == "integrations") {
@@ -51,11 +51,12 @@ subprojects {
         }
 
         mixin {
-            defaultRefmapName = "skybuddy-${project.name}.refmap.json"
+            defaultRefmapName = "${rootProject.name}-${project.name}.refmap.json"
         }
     }
 
     tasks.compileJava {
         options.compilerArgs.add("-AmoduleName=" + project.name)
+        options.compilerArgs.add("-AprojectId=" + rootProject.name)
     }
 }

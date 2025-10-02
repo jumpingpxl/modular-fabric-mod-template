@@ -1,4 +1,4 @@
-rootProject.name = "skybuddy"
+rootProject.name = "skybuddy" // is also used as mod id, so keep it simple
 
 pluginManagement {
     repositories {

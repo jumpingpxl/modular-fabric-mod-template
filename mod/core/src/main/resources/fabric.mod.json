@@ -1,6 +1,6 @@
 {
     "schemaVersion": 1,
-    "id": "skybuddy",
+    "id": "${mod_id}",
     "version": "${version}",
     "name": "SkyBuddy",
     "description": "This is an example description! Tell everyone what your mod is about!",
@@ -10,7 +10,7 @@
     "contact": {
         "sources": "https://github.com/jumpingpxl/modular-fabric-mod-template"
     },
-    "icon": "assets/skybuddy/icon.png",
+    "icon": "assets/${mod_id}/icon.png",
     "environment": "client",
     "entrypoints": {
         "preLaunch": [

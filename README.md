@@ -25,6 +25,7 @@ support.
 ## Where to find things
 
 - assets, fabric.mod.json, accesswidener -> `mod/core/src/main/resources`
+- mod id -> `settings.gradle.kts` (`rootProject.name`)
 - mod version -> `gradle.properties`
 - minecraft, fabric-loader and fabric-loom version -> `gradle/libraries.versions.toml`
 - fabric-api version & other mod dependencies -> `gradle/mod-dependencies.versions.toml`
@@ -35,7 +36,7 @@ support.
 
 1. Clone the repository
 2. Open the project in your favorite IDE (IntelliJ IDEA is recommended)
-3. Replace **everything** with the default mod id (`skybuddy`) with your own mod id (TODO: maybe reduce the amount of
-   places this has to be done?)
+3. Replace the value of `rootProject.name` in `settings.gradle.kts` with your desired mod id (don't forget to also
+   update the access widener & assets directory to match the new mod id)
 4. Update the mod name, description, author, etc. in `mod/core/src/main/resources/fabric.mod.json`
 5. Done. You can now start developing your mod!

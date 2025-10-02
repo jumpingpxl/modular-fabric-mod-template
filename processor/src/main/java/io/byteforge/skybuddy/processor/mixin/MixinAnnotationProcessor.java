@@ -86,8 +86,9 @@ public class MixinAnnotationProcessor extends AbstractProcessor {
       return;
     }
 
+    String projectId = this.processingEnv.getOptions().get("projectId");
     Gson gson = new Gson();
-    String fileName = "skybuddy-" + moduleName + ".mixins.json";
+    String fileName = projectId + "-" + moduleName + ".mixins.json";
     String commonTopLevelPackage = this.findCommonTopLevelPackage();
     try {
       // Create index file to dynamically load the configuration later
@@ -136,7 +137,7 @@ public class MixinAnnotationProcessor extends AbstractProcessor {
               "Found refmap file name: " + refmapName
           );
         } else {
-          refmapName = "skybuddy-" + moduleName + ".refmap.json";
+          refmapName = projectId + "-" + moduleName + ".refmap.json";
           this.processingEnv.getMessager().printMessage(
               Diagnostic.Kind.WARNING,
               "No refmap file found, defaulting to: " + refmapName
