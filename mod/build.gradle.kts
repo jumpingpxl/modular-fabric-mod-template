@@ -1,6 +1,10 @@
 plugins {
-    id("fabric-loom") version "1.11-SNAPSHOT" apply false
+    alias(libraries.plugins.loom) apply false
 }
+
+// The version catalogs
+val libs = the<org.gradle.accessors.dm.LibrariesForLibraries>()
+val mods = the<org.gradle.accessors.dm.LibrariesForModDependencies>()
 
 val accessWidener = file("core/src/main/resources/skybuddy.accesswidener")
 subprojects {
@@ -33,11 +37,10 @@ subprojects {
         val modImplementation by configurations
 
         // To change the versions see the gradle.properties file
-        minecraft("com.mojang:minecraft:${rootProject.extra["minecraft_version"]}")
+        minecraft("com.mojang:minecraft:${libs.versions.minecraft.get()}")
         mappings(loom.officialMojangMappings())
-        modImplementation("net.fabricmc:fabric-loader:${rootProject.extra["loader_version"]}")
-
-        modImplementation("net.fabricmc.fabric-api:fabric-api:${rootProject.extra["fabric_api_version"]}")
+        modImplementation(libs.fabric.loader)
+        modImplementation(mods.fabric.api)
     }
 
     configure<net.fabricmc.loom.api.LoomGradleExtensionAPI> {

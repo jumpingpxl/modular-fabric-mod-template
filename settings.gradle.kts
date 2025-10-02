@@ -8,6 +8,17 @@ pluginManagement {
     }
 }
 
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("modDependencies") {
+            from(files("/gradle/mod-dependencies.versions.toml"))
+        }
+        create("libraries") {
+            from(files("/gradle/libraries.versions.toml"))
+        }
+    }
+}
+
 include("models")
 include("processor")
 

@@ -20,10 +20,10 @@ dependencies {
     }
 
     // Dev Auth
-    modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
+    modRuntimeOnly(modDependencies.devauth)
 
     // Add additional mods to load in the dev environment here
-    modImplementation("maven.modrinth:modmenu:${rootProject.extra["mod_menu_version"]}")
+    modImplementation(modDependencies.modmenu)
 }
 
 loom {

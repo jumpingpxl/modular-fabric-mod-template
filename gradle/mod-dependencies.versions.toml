@@ -1,0 +1,4 @@
+[libraries]
+fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version = "0.128.2+1.21.5" } # Check on https://fabricmc.net/develop/
+devauth = { group = "me.djtheredstoner", name = "DevAuth-fabric", version = "1.2.1" }
+modmenu = { group = "maven.modrinth", name = "modmenu", version = "14.0.0-rc.2" }

@@ -25,7 +25,9 @@ support.
 ## Where to find things
 
 - assets, fabric.mod.json, accesswidener -> `mod/core/src/main/resources`
-- mod version, minecraft version, dependency versions -> `gradle.properties`
+- mod version -> `gradle.properties`
+- minecraft, fabric-loader and fabric-loom version -> `gradle/libraries.versions.toml`
+- fabric-api version & other mod dependencies -> `gradle/mod-dependencies.versions.toml`
 - template for `mixins.json` files -> `processor/src/main/resources/default.mixins.json`
 - development run configuration creation, dev auth configuration -> `mod/runner/build.gradle.kts`
 
