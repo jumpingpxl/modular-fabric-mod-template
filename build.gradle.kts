@@ -52,6 +52,15 @@ tasks.register<Jar>("mergedJar") {
         } ?: subproject.the<SourceSetContainer>()["main"].output
     })
 
+    var foundAccessWidener = false
+    filesMatching("*.accesswidener") {
+        if (foundAccessWidener) {
+            throw GradleException("Multiple access wideners found in merged jar! Only one access widener is allowed.")
+        }
+
+        foundAccessWidener = true
+        path = "${project.name}.accesswidener"
+    }
 
     // Move the fabric.mod.json processing to doLast to ensure all files are already added
     doLast {
@@ -82,6 +91,13 @@ tasks.register<Jar>("mergedJar") {
             // Add mixins if any exist
             if (mixinFiles.isNotEmpty()) {
                 fabricModMutable["mixins"] = mixinFiles.toList()
+            }
+
+            // Add access widener if it exists
+            if (foundAccessWidener) {
+                fabricModMutable["accessWidener"] = "${project.name}.accesswidener"
+            } else {
+                fabricModMutable["accessWidener"] = null
             }
 
             val jsonOutput = groovy.json.JsonOutput.toJson(fabricModMutable)

@@ -12,6 +12,7 @@
     },
     "icon": "assets/${mod_id}/icon.png",
     "environment": "client",
+    "accessWidener": "mod.accesswidener",
     "entrypoints": {
         "preLaunch": [
             "io.byteforge.skybuddy.runner.DevEnvironmentMixinApplier::apply"

@@ -6,7 +6,7 @@ plugins {
 val libs = the<org.gradle.accessors.dm.LibrariesForLibraries>()
 val mods = the<org.gradle.accessors.dm.LibrariesForModDependencies>()
 
-val accessWidener = file("core/src/main/resources/${rootProject.name}.accesswidener")
+val accessWidener = file("core/src/main/resources/mod.accesswidener")
 subprojects {
     // Skip non-mod projects
     if (project.name == "integrations") {
