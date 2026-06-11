@@ -1,13 +1,12 @@
 dependencies {
-    implementation(project(":models"))
+    if (globalSettings.includeModelsModule) {
+        implementation(project(":models"))
+    }
 
     // gson
-    implementation(libraries.gson)
-
-    // mixin (for mixin annotation processor)
-    implementation("net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // auto-service
-    implementation(libraries.autoservice.annotations)
-    annotationProcessor(libraries.autoservice)
+    implementation("com.google.auto.service:auto-service-annotations:1.1.1")
+    annotationProcessor("com.google.auto.service:auto-service:1.1.1")
 }

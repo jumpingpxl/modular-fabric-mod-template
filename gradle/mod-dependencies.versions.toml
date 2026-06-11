@@ -1,4 +1,9 @@
+[versions]
+fabric-api = "0.151.0+26.1.2" # Check on https://fabricmc.net/develop/
+dev-auth = "1.2.2" # https://github.com/DJtheRedstoner/DevAuth/releases
+modmenu = "18.0.0-beta.1" # https://modrinth.com/mod/modmenu/versions?l=fabric (version number)
+
 [libraries]
-fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version = "0.128.2+1.21.5" } # Check on https://fabricmc.net/develop/
-devauth = { group = "me.djtheredstoner", name = "DevAuth-fabric", version = "1.2.1" }
-modmenu = { group = "maven.modrinth", name = "modmenu", version = "14.0.0-rc.2" }
+fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
+devauth = { group = "me.djtheredstoner", name = "DevAuth-fabric", version.ref = "dev-auth" }
+modmenu = { group = "maven.modrinth", name = "modmenu", version.ref = "modmenu" }

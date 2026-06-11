@@ -1,29 +1,23 @@
-// hacky way to get all integration modules
-val integrations = ArrayList<String>()
-project.parent?.subprojects?.forEach {
-    if (it.name.startsWith("integration-")) {
-        integrations.add(it.name)
-    }
-}
-
 repositories {
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
 }
 
 dependencies {
     // Core, API and Models
-    implementation(project(path = ":mod:core", configuration = "namedElements"))
+    implementation(project(path = ":mod:core"))
 
     // All integration modules
-    integrations.forEach {
-        implementation(project(path = ":mod:integrations:$it", configuration = "namedElements"))
+    globalSettings.integrations.forEach {
+        implementation(project(path = ":mod:integrations:integration-$it")) {
+            isTransitive = false // do not load dependencies of integrations
+        }
     }
 
     // Dev Auth
-    modRuntimeOnly(modDependencies.devauth)
+    runtimeOnly(modDependencies.devauth)
 
     // Add additional mods to load in the dev environment here
-    modImplementation(modDependencies.modmenu)
+    implementation(modDependencies.modmenu)
 }
 
 loom {
@@ -34,8 +28,6 @@ loom {
             name("Client")
             ideConfigGenerated(true)
             runDir("..\\..\\run")
-
-            property("io.byteforge.skybuddy.development", "true")
 
             // Mixin Debug Properties
             property("mixin.debug", "true")

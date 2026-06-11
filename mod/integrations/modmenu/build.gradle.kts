@@ -1,3 +1,3 @@
 dependencies {
-    modImplementation(modDependencies.modmenu)
+    implementation(modDependencies.modmenu)
 }

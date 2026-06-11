@@ -1,20 +1,29 @@
 dependencies {
-    api(project(path = ":mod:api", configuration = "namedElements"))
+    if (globalSettings.includeAPIModule) {
+        api(project(path = ":mod:api"))
+    } else if (globalSettings.includeModelsModule) {
+        api(project(":models"))
+    }
+
+    // Additional dependencies
+    // implementation(modDependencies.fabric.api)
 }
 
 tasks.processResources {
-    inputs.property("version", project.version)
-    inputs.property("mod_id", rootProject.name)
-    inputs.property("fabric_loader_version", libraries.fabric.loader.get().version)
-    inputs.property("minecraft_version", libraries.versions.minecraft.get())
     filteringCharset = "UTF-8"
+    val replacements: Map<String, Any> = mapOf(
+        "version" to project.version,
+        "mod_id" to rootProject.name,
+        "fabric_loader_version" to libraries.versions.fabric.loader.get(),
+        "minecraft_version" to libraries.versions.minecraft.get(),
+        "java_version" to globalSettings.targetJavaVersion,
+    )
+
+    replacements.forEach {
+        inputs.property(it.key, it.value)
+    }
 
     filesMatching("fabric.mod.json") {
-        expand(
-            "version" to project.version,
-            "mod_id" to rootProject.name,
-            "fabric_loader_version" to libraries.fabric.loader.get().version,
-            "minecraft_version" to libraries.versions.minecraft.get(),
-        )
+        expand(replacements)
     }
 }

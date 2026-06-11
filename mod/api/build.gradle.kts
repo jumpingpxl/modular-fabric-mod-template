@@ -1,4 +1,8 @@
 dependencies {
-    implementation(project(":mod"))
-    api(project(":models"))
+    if (globalSettings.includeModelsModule) {
+        api(project(":models"))
+    }
+
+    // Additional dependencies
+    implementation(modDependencies.fabric.api)
 }

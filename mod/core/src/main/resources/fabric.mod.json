@@ -2,7 +2,7 @@
     "schemaVersion": 1,
     "id": "${mod_id}",
     "version": "${version}",
-    "name": "SkyBuddy",
+    "name": "Example Mod",
     "description": "This is an example description! Tell everyone what your mod is about!",
     "authors": [
         "Me!"
@@ -15,19 +15,19 @@
     "accessWidener": "mod.accesswidener",
     "entrypoints": {
         "preLaunch": [
-            "io.byteforge.skybuddy.runner.DevEnvironmentMixinApplier::apply"
+            "modularmodtemplate.runner.DevEnvironmentMixinApplier::apply"
         ],
         "client": [
-            "io.byteforge.skybuddy.core.DefaultSkyBuddy"
+            "com.example.core.DefaultExampleMod"
         ],
         "modmenu": [
-            "io.byteforge.skybuddy.integration.modmenu.ModMenuIntegration"
+            "com.example.integration.modmenu.ModMenuIntegration"
         ]
     },
     "depends": {
         "fabricloader": ">=${fabric_loader_version}",
         "minecraft": "${minecraft_version}",
-        "java": ">=21",
+        "java": ">=${java_version}",
         "fabric-api": "*"
     },
     "suggests": {

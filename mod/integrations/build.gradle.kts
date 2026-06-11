@@ -1,5 +1,5 @@
 subprojects {
     dependencies {
-        api(project(path = ":mod:core", configuration = "namedElements"))
+        api(project(path = ":mod:core"))
     }
 }
