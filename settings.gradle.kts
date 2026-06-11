@@ -32,10 +32,10 @@ plugins {
 dependencyResolutionManagement {
     versionCatalogs {
         create("modDependencies") {
-            from(files("/gradle/mod-dependencies.versions.toml"))
+            from(files("gradle/mod-dependencies.versions.toml"))
         }
         create("libraries") {
-            from(files("/gradle/libraries.versions.toml"))
+            from(files("gradle/libraries.versions.toml"))
         }
     }
 }
