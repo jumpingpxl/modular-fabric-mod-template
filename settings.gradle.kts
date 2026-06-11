@@ -57,6 +57,19 @@ if (System.getenv("CI") != "true") {
 }
 
 globalSettings.integrations.forEach {
+    val directory = file("mod/integrations/${it}/")
+    // check if directory of module exists
+    if(!directory.exists()) {
+        // if it doesnt exist, create directories
+        directory.resolve("src")
+            .resolve("main")
+            .resolve("java")
+            .mkdirs()
+
+        // create empty build.gradle.kts
+        directory.resolve("build.gradle.kts").createNewFile()
+    }
+
     var path = "mod:integrations:${it}"
     include(path)
     project(":${path}").name = "integration-${it}"
