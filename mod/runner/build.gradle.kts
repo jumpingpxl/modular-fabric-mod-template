@@ -4,11 +4,11 @@ repositories {
 
 dependencies {
     // Core, API and Models
-    implementation(project(path = ":mod:core"))
+    implementation(project(":mod:core"))
 
     // All integration modules
     globalSettings.integrations.forEach {
-        implementation(project(path = ":mod:integrations:integration-$it")) {
+        implementation(project(":mod:integrations:integration-$it")) {
             isTransitive = false // do not load dependencies of integrations
         }
     }

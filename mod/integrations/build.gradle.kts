@@ -1,5 +1,5 @@
 subprojects {
     dependencies {
-        api(project(path = ":mod:core"))
+        implementation(project(":mod:core"))
     }
 }
