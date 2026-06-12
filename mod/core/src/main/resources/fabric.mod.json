@@ -12,7 +12,6 @@
     },
     "icon": "assets/${mod_id}/icon.png",
     "environment": "client",
-    "accessWidener": "mod.accesswidener",
     "entrypoints": {
         "preLaunch": [
             "modularmodtemplate.runner.DevEnvironmentMixinApplier::apply"
