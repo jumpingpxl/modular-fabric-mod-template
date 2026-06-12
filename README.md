@@ -17,10 +17,10 @@ Featuring automatic mixin configuration generation and isolated modules for robu
 2. Open the project in your favorite IDE (IntelliJ IDEA is recommended).
 3. Replace the value of `rootProject.name` in `/settings.gradle.kts` with your desired mod id.
    > Don't forget to also rename your assets directory in `/mod/core/src/main/resources/assets/<modid>` to match this
-   new
-   mod id.
+   new mod id.
 4. Update the mod name, description, author, etc. in `/mod/core/src/main/resources/fabric.mod.json`.
 5. Reload the Gradle project, done!
+6. **(Optional)** Delete the `LICENSE` file or replace it with whatever license you want to use for your mod.
 
 ## Project Structure
 
@@ -113,3 +113,11 @@ intending to use, adjust the min version.
 
 - *If* the run configuration broke after updating the Minecraft version or mod id: delete it, reload the project from
   disk and reload Gradle. A new (hopefully working) run configuration should have been created.
+-
+
+## License
+
+This template is dedicated to the public domain under the [Unlicense](LICENSE).
+You are free to copy, modify, publish, or distribute this structure in any way you see fit.
+
+Feel free to delete the `LICENSE` file or replace it with your own license.
