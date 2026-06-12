@@ -26,4 +26,11 @@ tasks.processResources {
     filesMatching("fabric.mod.json") {
         expand(replacements)
     }
+
+    val licenseFile = rootProject.file("LICENSE")
+    if (licenseFile.exists()) {
+        from(licenseFile) {
+            into("META-INF")
+        }
+    }
 }
