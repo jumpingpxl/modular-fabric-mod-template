@@ -5,7 +5,7 @@ plugins {
 // The version catalogs
 val libs = the<org.gradle.accessors.dm.LibrariesForLibraries>()
 
-val accessWidener = file("core/src/main/resources/mod.accesswidener")
+val accessWidener = lookupAccessWidener()
 subprojects {
     // Skip non-mod projects
     if (project.name == "integrations") {
@@ -35,7 +35,10 @@ subprojects {
     }
 
     configure<net.fabricmc.loom.api.LoomGradleExtensionAPI> {
-        accessWidenerPath = accessWidener
+        if (accessWidener != null) {
+            accessWidenerPath = accessWidener
+        }
+
         runs.clear()
     }
 
@@ -44,4 +47,14 @@ subprojects {
         options.compilerArgs.add("-AprojectId=" + rootProject.name)
         options.compilerArgs.add("-AjavaVersion=" + globalSettings.targetJavaVersion)
     }
+}
+
+fun lookupAccessWidener(): File? {
+    val resourcesDirectory = file("core/src/main/resources/")
+    val accessWideners = resourcesDirectory.listFiles().filter { file -> file.extension == "accesswidener" }
+    if (accessWideners.size > 1) {
+        error("Multiple access wideners found.")
+    }
+
+    return accessWideners.firstOrNull()
 }
