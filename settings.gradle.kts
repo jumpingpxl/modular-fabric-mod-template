@@ -59,7 +59,7 @@ if (System.getenv("CI") != "true") {
 globalSettings.integrations.forEach {
     val directory = file("mod/integrations/${it}/")
     // check if directory of module exists
-    if(!directory.exists()) {
+    if (!directory.exists()) {
         // if it doesnt exist, create directories
         directory.resolve("src")
             .resolve("main")

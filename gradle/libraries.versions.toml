@@ -1,7 +1,7 @@
 [versions]
-minecraft = "26.1.2" # The desired Minecraft version
+minecraft = "26.2" # The desired Minecraft version
 fabric-loader = "0.19.3" # Check on https://fabricmc.net/develop/
-fabric-loom = "1.16-SNAPSHOT" # Check on https://fabricmc.net/develop/
+fabric-loom = "1.17-SNAPSHOT" # Check on https://fabricmc.net/develop/
 
 [libraries]
 fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
