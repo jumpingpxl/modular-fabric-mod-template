@@ -50,9 +50,9 @@ if (globalSettings.sources) {
 }
 
 tasks.named("build") {
-    dependsOn("mergeJar")
+    finalizedBy("mergeJar")
     if (globalSettings.sources) {
-        dependsOn("mergeSourcesJar")
+        finalizedBy("mergeSourcesJar")
     }
 }
 
@@ -259,6 +259,20 @@ tasks.register("processMergedJarMetadata") {
             groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(fabricModMutable))
         )
         outputDirectory.resolve("remove_aw.txt").writeText(removeAccessWidener.toString())
+    }
+}
+
+tasks.withType<Jar> {
+    if (archiveVersion.isPresent) {
+        archiveVersion.set(buildString {
+            append(project.version)
+            if (System.getenv("CI") != "true") {
+                append("-SNAPSHOT")
+            }
+
+            append("+mc")
+            append(libraries.versions.minecraft.get())
+        })
     }
 }
 
