@@ -5,6 +5,7 @@ globalSettings {
     // project
     targetJavaVersion = 25
     sources = false // whether to create a sources jar on build
+    //compatibleMinecraftVersions = ">=26.1 <=26.2" // see https://docs.fabricmc.net/develop/loader/fabric-mod-json#semantic-versioning, is validated upon gradle load. If commented out (or empty), the exact Minecraft version set in libraries.versions.toml will be used
 
     // modules
     includeModelsModule = true // whether to add the models module (for shared code between the mod & processor)
