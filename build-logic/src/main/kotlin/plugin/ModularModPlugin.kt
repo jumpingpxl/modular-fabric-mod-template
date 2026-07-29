@@ -11,6 +11,7 @@ open class GlobalSettings {
     // project
     var targetJavaVersion: Int by property()
     var sources: Boolean by property()
+    var compatibleMinecraftVersions: String? = null
 
     // modules
     var includeModelsModule: Boolean by property()
