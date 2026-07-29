@@ -1,4 +1,4 @@
-rootProject.name = "example" // is also used as mod id, so keep it simple
+rootProject.name = "examplemod" // is also used as mod id, so keep it simple
 
 // configure the project here
 globalSettings {
@@ -8,8 +8,8 @@ globalSettings {
     //compatibleMinecraftVersions = ">=26.1 <=26.2" // see https://docs.fabricmc.net/develop/loader/fabric-mod-json#semantic-versioning, is validated upon gradle load. If commented out (or empty), the exact Minecraft version set in libraries.versions.toml will be used
 
     // modules
-    includeModelsModule = true // whether to add the models module (for shared code between the mod & processor)
-    includeAPIModule = true // whether to use the api module as base. If false, the core module will be the base
+    includeModelsModule = false // whether to add the models module (for shared code between the mod & processor)
+    includeAPIModule = false // whether to use the api module as base. If false, the core module will be the base
     integrations = listOf(
         "modmenu",
         // the integrations to load (in the `integrations` folder)

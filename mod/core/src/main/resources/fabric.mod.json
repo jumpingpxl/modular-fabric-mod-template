@@ -17,10 +17,10 @@
             "modularmodtemplate.runner.DevEnvironmentMixinApplier::apply"
         ],
         "client": [
-            "com.example.core.DefaultExampleMod"
+            "com.example.examplemod.core.ExampleMod"
         ],
         "modmenu": [
-            "com.example.integration.modmenu.ModMenuIntegration"
+            "com.example.examplemod.integration.modmenu.ModMenuIntegration"
         ]
     },
     "depends": {

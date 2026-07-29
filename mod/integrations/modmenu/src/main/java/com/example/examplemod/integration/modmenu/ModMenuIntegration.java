@@ -1,4 +1,4 @@
-package com.example.integration.modmenu;
+package com.example.examplemod.integration.modmenu;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

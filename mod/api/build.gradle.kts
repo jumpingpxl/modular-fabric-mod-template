@@ -4,5 +4,5 @@ dependencies {
     }
 
     // Additional dependencies
-    api(modDependencies.fabric.api)
+    // api(modDependencies.fabric.api)
 }
