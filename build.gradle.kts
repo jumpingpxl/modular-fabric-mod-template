@@ -8,7 +8,15 @@ val globalSettings = gradle.extensions.findByType<GlobalSettings>()
     ?: error("plugin.GlobalSettings not initialized. Did you apply com.example.settings in settings.gradle.kts?")
 
 group = rootProject.extra["maven_group"] as String
-version = rootProject.extra["mod_version"] as String
+version = buildString {
+    append(rootProject.extra["mod_version"])
+    if (System.getenv("CI") != "true") {
+        append("-SNAPSHOT")
+    }
+
+    append("+mc")
+    append(libraries.versions.minecraft.get())
+}
 
 // Modules to exclude from the merged jar
 val excludedModules = listOf("processor", "runner")
@@ -259,20 +267,6 @@ tasks.register("processMergedJarMetadata") {
             groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(fabricModMutable))
         )
         outputDirectory.resolve("remove_aw.txt").writeText(removeAccessWidener.toString())
-    }
-}
-
-tasks.withType<Jar> {
-    if (archiveVersion.isPresent) {
-        archiveVersion.set(buildString {
-            append(project.version)
-            if (System.getenv("CI") != "true") {
-                append("-SNAPSHOT")
-            }
-
-            append("+mc")
-            append(libraries.versions.minecraft.get())
-        })
     }
 }
 
