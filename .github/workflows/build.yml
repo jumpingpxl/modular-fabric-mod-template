@@ -30,8 +30,19 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with gradle
         run: ./gradlew build
-      - name: Capture Build Artifacts
+      - name: Upload Mod Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: Artifacts
-          path: build/libs/
+          name: mod-jar
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+          if-no-files-found: error
+          archive: false
+      - name: Upload Sources Artifact if Present
+        uses: actions/upload-artifact@v7
+        with:
+          name: sources-jar
+          path: build/libs/*-sources.jar
+          if-no-files-found: ignore
+          archive: false
