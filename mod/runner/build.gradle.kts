@@ -25,17 +25,17 @@ loom {
         create("run") {
             client()
 
-            name("Client")
-            ideConfigGenerated(true)
-            runDir("..\\..\\run")
+            displayName = "Client"
+            generateRunConfig = true
+            runDirectory = file("..\\..\\run")
 
             // Mixin Debug Properties
-            property("mixin.debug", "true")
-            property("mixin.debug.export", "true")
+            systemProperties.put("mixin.debug", "true")
+            systemProperties.put("mixin.debug.export", "true")
 
             // Dev Auth Properties
-            property("devauth.enabled", "true")
-            //property("devauth.account", "main")
+            systemProperties.put("devauth.enabled", "true")
+            //systemProperties.put("devauth.account", "main")
         }
     }
 }
